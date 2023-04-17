@@ -1,0 +1,147 @@
+package br.com.explosao.domain.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "STUDENT")
+public class StudentEntity {
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    Long id;
+    @Column(name = "NAME")
+    String name;
+    @Column(name = "PHONE_LIST")
+    String phoneList;
+    @Column(name = "GUARDIAN_NAME")
+    String guardianName;
+    @Column(name = "GUARDIAN_SIGNATURE")
+    String guardianSignature;
+    @Column(name = "CPF")
+    String cpf;
+    @Column(name = "REGISTRATION")
+    String registration;
+    @Column(name = "BIRTHDAY")
+    LocalDateTime birthday;
+    @Column(name = "UPDATED_AT")
+    LocalDateTime updatedAt;
+    @Column(name = "INSERTED_AT")
+    LocalDateTime insertedAt;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneList() {
+        return phoneList;
+    }
+
+    public void setPhoneList(String phoneList) {
+        this.phoneList = phoneList;
+    }
+
+    public String getGuardianName() {
+        return guardianName;
+    }
+
+    public void setGuardianName(String guardianName) {
+        this.guardianName = guardianName;
+    }
+
+    public String getGuardianSignature() {
+        return guardianSignature;
+    }
+
+    public void setGuardianSignature(String guardianSignature) {
+        this.guardianSignature = guardianSignature;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(String registration) {
+        this.registration = registration;
+    }
+
+    public LocalDateTime getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDateTime birthday) {
+        this.birthday = birthday;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getInsertedAt() {
+        return insertedAt;
+    }
+
+    public void setInsertedAt(LocalDateTime insertedAt) {
+        this.insertedAt = insertedAt;
+    }
+
+    @PrePersist
+    private void prePersistFunction(){
+        this.updatedAt = LocalDateTime.now();
+        this.insertedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void preUpdateFunction(){
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @Override
+    public String toString() {
+        return "StudentEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phoneList='" + phoneList + '\'' +
+                ", guardianName='" + guardianName + '\'' +
+                ", guardianSignature='" + guardianSignature + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", registration='" + registration + '\'' +
+                ", birthday=" + birthday +
+                ", updatedAt=" + updatedAt +
+                ", insertedAt=" + insertedAt +
+                '}';
+    }
+}
+
+
