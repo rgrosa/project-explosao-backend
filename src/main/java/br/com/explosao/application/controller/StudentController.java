@@ -41,7 +41,7 @@ public class StudentController {
 
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Response> findAll() throws Exception {
+    public ResponseEntity<Response> findAll(){
         return ResponseEntity.ok().
                 body(new Response(
                         200,
