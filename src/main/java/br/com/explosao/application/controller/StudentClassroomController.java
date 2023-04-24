@@ -38,7 +38,7 @@ public class StudentClassroomController {
                         studentClassroomService.postStudentClassroom(studentClassroom)
                 ));
     }
-    //TODO: Testar
+
     @GetMapping("/find-by-student-id")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Response> getStudentClassroomListByStudentIdController(
@@ -51,7 +51,6 @@ public class StudentClassroomController {
                 ));
     }
 
-    //TODO: Testar
     @GetMapping("/find-by-classroom-id")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Response> getStudentClassroomListByClassroomIdController(

@@ -2,6 +2,8 @@ package br.com.explosao.domain.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 public class PaymentEntity {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     Long id;
 
     @Column(name = "STUDENT_CLASSROOM_ID")

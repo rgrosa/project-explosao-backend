@@ -287,7 +287,77 @@
 		},
 		{
 			"name": "Student-Classroom",
-			"item": [],
+			"item": [
+				{
+					"name": "Post student classroom",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4Mjk2NjUzOSwiaWF0IjoxNjgyMzYxNzM5fQ.0BspJiLlYqkzkb4wVjocrESpxr5IGdKI2iy89QqPRnA_yOVeEsom1up_yOiIbb0CpQ4zhVzjHgq_pyowRAnhqw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\n    \"classroomId\":1,\n    \"studentId\":1,\n    \"status\":true\n\n\t\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/explosao-service/student-classroom/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"explosao-service",
+								"student-classroom",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get student classroom by student id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get student classroom by classroom id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
 			"protocolProfileBehavior": {}
 		}
 	],

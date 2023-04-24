@@ -28,7 +28,7 @@ public class StudentClassroomServiceImpl implements StudentClassroomService {
 
     @Override
     public StudentClassroomDTO postStudentClassroom(StudentClassroomDTO studentClassroom) throws ResourceNotFoundException {
-        validateIfExistsStudentIdClassroomId(studentClassroom.getClassroomId(),studentClassroom.getStudentId());
+        validateIfExistsStudentIdClassroomId(studentClassroom.getClassroomId(), studentClassroom.getStudentId());
         StudentClassroomEntity studentClassroomEntity = getStudentClassroomEntityOrCreateNew(studentClassroom);
         populateStudentClassroomEntity(studentClassroomEntity, studentClassroom);
         return makeStudentClassroomDTO(studentClassroomRepository.save(studentClassroomEntity));
@@ -64,7 +64,7 @@ public class StudentClassroomServiceImpl implements StudentClassroomService {
         StudentClassroomDTO studentClassroom = new StudentClassroomDTO();
         studentClassroom.setId(studentClassroomEntity.getId());
         studentClassroom.setClassroomId(studentClassroomEntity.getClassroomId());
-        studentClassroom.setStudentId(studentClassroom.getStudentId());
+        studentClassroom.setStudentId(studentClassroomEntity.getStudentId());
         studentClassroom.setStatus(studentClassroomEntity.getStatus());
         studentClassroom.setLastPaymentId(studentClassroomEntity.getLastPaymentId());
         studentClassroom.setInsertedAt(studentClassroomEntity.getInsertedAt());
