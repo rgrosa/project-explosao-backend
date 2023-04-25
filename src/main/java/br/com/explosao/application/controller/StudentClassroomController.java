@@ -42,24 +42,26 @@ public class StudentClassroomController {
     @GetMapping("/find-by-student-id")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Response> getStudentClassroomListByStudentIdController(
-            @RequestParam @Valid Long studentId) throws Exception {
+            @RequestParam @Valid Long studentId,
+            @RequestParam(defaultValue = "true") Boolean showOnlyActive) throws Exception {
         return ResponseEntity.ok().
                 body(new Response(
                         200,
                         "Success",
-                        studentClassroomService.getStudentClassroomListByStudentId(studentId)
+                        studentClassroomService.getStudentClassroomListByStudentIdAndStatus(studentId, showOnlyActive)
                 ));
     }
 
     @GetMapping("/find-by-classroom-id")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Response> getStudentClassroomListByClassroomIdController(
-            @RequestParam @Valid Long classroomId) throws Exception {
+            @RequestParam @Valid Long classroomId,
+            @RequestParam(defaultValue = "true") Boolean showOnlyActive) throws Exception {
         return ResponseEntity.ok().
                 body(new Response(
                         200,
                         "Success",
-                        studentClassroomService.getStudentClassroomListByClassroomId(classroomId)
+                        studentClassroomService.getStudentClassroomListByClassroomIdAndStatus(classroomId, showOnlyActive)
                 ));
     }
 

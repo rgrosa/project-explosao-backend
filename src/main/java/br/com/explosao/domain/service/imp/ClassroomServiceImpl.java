@@ -67,8 +67,12 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
-    public List<ClassroomDTO> findAll(){
-        return makeClassroomDTOList(classroomRepository.findAll());
+    public List<ClassroomDTO> findAll(Boolean showOnlyActive){
+        return makeClassroomDTOList(
+                showOnlyActive?
+                classroomRepository.findAllByStatus(true):
+                classroomRepository.findAll()
+        );
     }
 
     private List<ClassroomDTO> makeClassroomDTOList(List<ClassroomEntity> all) {

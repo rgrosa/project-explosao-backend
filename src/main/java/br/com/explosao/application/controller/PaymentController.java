@@ -2,9 +2,7 @@ package br.com.explosao.application.controller;
 
 import br.com.explosao.application.resource.Response;
 import br.com.explosao.domain.dto.PaymentDTO;
-import br.com.explosao.domain.dto.StudentClassroomDTO;
 import br.com.explosao.domain.service.PaymentService;
-import br.com.explosao.domain.service.StudentService;
 import br.com.explosao.infrasctructure.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

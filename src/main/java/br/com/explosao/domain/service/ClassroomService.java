@@ -12,5 +12,5 @@ public interface ClassroomService {
 
     ClassroomDTO findClassroomById(Long classroomId) throws ResourceNotFoundException;
 
-    List<ClassroomDTO> findAll();
+    List<ClassroomDTO> findAll(Boolean showOnlyActive);
 }

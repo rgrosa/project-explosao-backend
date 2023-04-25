@@ -39,8 +39,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDTO findStudentById(Long classroomId) throws ResourceNotFoundException {
-        Optional<StudentEntity> optionalStudentEntity = studentRepository.findById(classroomId);
+    public StudentDTO findStudentById(Long studentId) throws ResourceNotFoundException {
+        Optional<StudentEntity> optionalStudentEntity = studentRepository.findById(studentId);
         return makeStudentDTO(optionalStudentEntity.orElseThrow(() -> new ResourceNotFoundException("Resource not found")));
     }
 

@@ -11,5 +11,5 @@ public interface StudentService {
 
     List<StudentDTO> findAll();
 
-    StudentDTO findStudentById(Long classroomId) throws ResourceNotFoundException;
+    StudentDTO findStudentById(Long studentId) throws ResourceNotFoundException;
 }

@@ -41,15 +41,21 @@ public class StudentClassroomServiceImpl implements StudentClassroomService {
     }
 
     @Override
-    public List<StudentClassroomDTO> getStudentClassroomListByClassroomId(Long classroomId) throws Exception {
-        Optional<List<StudentClassroomEntity>> optionalStudentClassroomEntityList = studentClassroomRepository.findAllByClassroomId(classroomId);
-        return makeStudentClassroomDTOList(optionalStudentClassroomEntityList.orElseThrow(() -> new ResourceNotFoundException("Resource not found")));
+    public List<StudentClassroomDTO> getStudentClassroomListByClassroomIdAndStatus(Long classroomId, Boolean showOnlyActive) throws Exception {
+        Optional<List<StudentClassroomEntity>> optionalStudentClassroomEntityList =
+                studentClassroomRepository.findAllByClassroomIdAndStatus(classroomId, showOnlyActive);
+        return makeStudentClassroomDTOList(
+                optionalStudentClassroomEntityList.orElseThrow(() -> new ResourceNotFoundException("Resource not found"))
+        );
     }
 
     @Override
-    public List<StudentClassroomDTO> getStudentClassroomListByStudentId(Long studentId) throws Exception {
-        Optional<List<StudentClassroomEntity>> optionalStudentClassroomEntityList = studentClassroomRepository.findAllByStudentId(studentId);
-        return makeStudentClassroomDTOList(optionalStudentClassroomEntityList.orElseThrow(() -> new ResourceNotFoundException("Resource not found")));
+    public List<StudentClassroomDTO> getStudentClassroomListByStudentIdAndStatus(Long studentId, Boolean showOnlyActive) throws Exception {
+        Optional<List<StudentClassroomEntity>> optionalStudentClassroomEntityList =
+                studentClassroomRepository.findAllByStudentIdAndStatus(studentId, showOnlyActive);
+        return makeStudentClassroomDTOList(
+                optionalStudentClassroomEntityList.orElseThrow(() -> new ResourceNotFoundException("Resource not found"))
+        );
     }
 
     private List<StudentClassroomDTO> makeStudentClassroomDTOList(List<StudentClassroomEntity> studentClassroomEntityList) {

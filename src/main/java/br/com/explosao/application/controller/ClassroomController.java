@@ -46,12 +46,12 @@ public class ClassroomController {
 
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Response> findAll(){
+    public ResponseEntity<Response> findAll(@RequestParam(defaultValue = "true") Boolean showOnlyActive){
         return ResponseEntity.ok().
                 body(new Response(
                         200,
                         "Success",
-                        classroomservice.findAll()
+                        classroomservice.findAll(showOnlyActive)
                 ));
     }
 

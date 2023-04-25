@@ -9,8 +9,8 @@ public interface StudentClassroomService {
 
     StudentClassroomDTO postStudentClassroom(StudentClassroomDTO studentClassroom) throws ResourceNotFoundException;
 
-    List<StudentClassroomDTO> getStudentClassroomListByClassroomId(Long classroomId) throws Exception;
+    List<StudentClassroomDTO> getStudentClassroomListByClassroomIdAndStatus(Long classroomId, Boolean showOnlyActive) throws Exception;
 
-    List<StudentClassroomDTO> getStudentClassroomListByStudentId(Long studentId) throws Exception;
+    List<StudentClassroomDTO> getStudentClassroomListByStudentIdAndStatus(Long studentId, Boolean showOnlyActive) throws Exception;
 
 }

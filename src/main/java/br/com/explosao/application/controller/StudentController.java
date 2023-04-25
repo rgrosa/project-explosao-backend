@@ -53,12 +53,12 @@ public class StudentController {
     @GetMapping("/by-id")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Response> findStudentById(
-            @RequestParam @Valid Long classroomId) throws Exception {
+            @RequestParam @Valid Long studentId) throws Exception {
         return ResponseEntity.ok().
                 body(new Response(
                         200,
                         "Success",
-                        studentService.findStudentById(classroomId)
+                        studentService.findStudentById(studentId)
                 ));
     }
 
