@@ -7,7 +7,7 @@ public class PaymentDTO {
 
     Long id;
     @NotNull
-    Long studentClassroomId;
+    Long studentId;
     Double paymentValue;
     @NotBlank
     String paymentAt;
@@ -20,12 +20,12 @@ public class PaymentDTO {
         this.id = id;
     }
 
-    public Long getStudentClassroomId() {
-        return studentClassroomId;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setStudentClassroomId(Long studentClassroomId) {
-        this.studentClassroomId = studentClassroomId;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     public Double getPaymentValue() {
@@ -48,7 +48,7 @@ public class PaymentDTO {
     public String toString() {
         return "PaymentDTO{" +
                 "id=" + id +
-                ", studentClassroomId=" + studentClassroomId +
+                ", studentClassroomId=" + studentId +
                 ", paymentValue=" + paymentValue +
                 ", paymentAt='" + paymentAt + '\'' +
                 '}';

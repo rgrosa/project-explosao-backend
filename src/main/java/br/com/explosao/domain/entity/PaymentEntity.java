@@ -17,8 +17,8 @@ public class PaymentEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "STUDENT_CLASSROOM_ID")
-    Long studentClassroomId;
+    @Column(name = "STUDENT_ID")
+    Long studentId;
 
     @Column(name = "PAYMENT_VALUE")
     Double paymentValue;
@@ -34,12 +34,12 @@ public class PaymentEntity {
         this.id = id;
     }
 
-    public Long getStudentClassroomId() {
-        return studentClassroomId;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setStudentClassroomId(Long studentClassroomId) {
-        this.studentClassroomId = studentClassroomId;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     public Double getPaymentValue() {
@@ -68,7 +68,7 @@ public class PaymentEntity {
     public String toString() {
         return "PaymentEntity{" +
                 "id=" + id +
-                ", studentClassroomId=" + studentClassroomId +
+                ", studentClassroomId=" + studentId +
                 ", paymentValue=" + paymentValue +
                 ", paymentAt=" + paymentAt +
                 '}';

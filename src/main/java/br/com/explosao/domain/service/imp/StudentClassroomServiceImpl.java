@@ -45,7 +45,7 @@ public class StudentClassroomServiceImpl implements StudentClassroomService {
         Optional<List<StudentClassroomEntity>> optionalStudentClassroomEntityList =
                 studentClassroomRepository.findAllByClassroomIdAndStatus(classroomId, showOnlyActive);
         return makeStudentClassroomDTOList(
-                optionalStudentClassroomEntityList.orElseThrow(() -> new ResourceNotFoundException("Resource not found"))
+                optionalStudentClassroomEntityList.orElseThrow(() -> new ResourceNotFoundException("Student Classroom relation not found"))
         );
     }
 
@@ -54,7 +54,7 @@ public class StudentClassroomServiceImpl implements StudentClassroomService {
         Optional<List<StudentClassroomEntity>> optionalStudentClassroomEntityList =
                 studentClassroomRepository.findAllByStudentIdAndStatus(studentId, showOnlyActive);
         return makeStudentClassroomDTOList(
-                optionalStudentClassroomEntityList.orElseThrow(() -> new ResourceNotFoundException("Resource not found"))
+                optionalStudentClassroomEntityList.orElseThrow(() -> new ResourceNotFoundException("Student Classroom relation not found"))
         );
     }
 
@@ -82,6 +82,7 @@ public class StudentClassroomServiceImpl implements StudentClassroomService {
         studentClassroomEntity.setClassroomId(studentClassroom.getClassroomId());
         studentClassroomEntity.setStudentId(studentClassroom.getStudentId());
         studentClassroomEntity.setStatus(studentClassroom.getStatus());
+        studentClassroomEntity.setLastPaymentId(studentClassroom.getLastPaymentId());
     }
 
     private StudentClassroomEntity getStudentClassroomEntityOrCreateNew(StudentClassroomDTO studentClassroom) {

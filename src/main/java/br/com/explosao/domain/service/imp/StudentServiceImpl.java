@@ -7,7 +7,7 @@ import br.com.explosao.domain.service.StudentService;
 import br.com.explosao.infrasctructure.exception.RFC3339DateFormatConverterException;
 import br.com.explosao.infrasctructure.exception.ResourceNotFoundException;
 import br.com.explosao.infrasctructure.exception.ResourceSizeException;
-import br.com.explosao.infrasctructure.util.date.RFC3339DateFormatConverter;
+import br.com.explosao.infrasctructure.util.date.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +53,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private static void populateStudentEntity(StudentEntity studentEntity, StudentDTO student) throws RFC3339DateFormatConverterException {
-        LocalDateTime studentBirthday = RFC3339DateFormatConverter.string2LocalDateTime(
+        LocalDateTime studentBirthday = DateFormatter.string2LocalDateTime(
                 student.getBirthday(),
                 "yyyy-MM-dd'T'HH:mm:ss'Z'"
         );
