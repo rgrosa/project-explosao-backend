@@ -3,7 +3,6 @@ package br.com.explosao.domain.service.imp;
 import br.com.explosao.domain.dto.PaymentDTO;
 import br.com.explosao.domain.dto.StudentClassroomDTO;
 import br.com.explosao.domain.entity.PaymentEntity;
-import br.com.explosao.domain.entity.StudentEntity;
 import br.com.explosao.domain.repository.PaymentRepository;
 import br.com.explosao.domain.service.PaymentService;
 import br.com.explosao.domain.service.StudentClassroomService;
@@ -48,6 +47,12 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentDTO getPaymentById(Long paymentId) throws ResourceNotFoundException, RFC3339DateFormatConverterException {
         Optional<PaymentEntity> optionalPaymentEntity = paymentRepository.findById(paymentId);
         return makePaymentDTO(optionalPaymentEntity.orElseThrow(() -> new ResourceNotFoundException("Resource not found")));
+    }
+
+    @Override
+    public Long getLastPaymentFromStudentId(Long studentId) throws ResourceNotFoundException {
+        Optional<PaymentEntity> optionalPaymentEntity = paymentRepository.findLastIdByStudentId(studentId);
+        return optionalPaymentEntity.orElseThrow(() -> new ResourceNotFoundException("Resource not found")).getId();
     }
 
     private PaymentEntity makePaymentEntity(PaymentDTO paymentDTO, LocalDateTime paymentAt) {

@@ -9,6 +9,7 @@ import br.com.explosao.infrasctructure.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,15 +50,34 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     private void validateInsert(ClassroomDTO classroom) throws MultipleResourceException {
-        Optional<ClassroomEntity> optionalClassroomEntity = classroomRepository.
-                findOneByWeekDayAndClassroomTimeAndStatus(
+        Optional<List<ClassroomEntity>> optionalClassroomEntity = classroomRepository.
+                findAllByWeekDayAndStatus(
                         classroom.getWeekDay(),
-                        classroom.getClassroomTime(),
                         true
                 );
         if(optionalClassroomEntity.isPresent()){
-            throw new MultipleResourceException("A active classroom is already valid for the week and time informed!");
+            if(isHourRangeInClassroomList(classroom.getClassroomTime(), optionalClassroomEntity.get())){
+                throw new MultipleResourceException("A active classroom is already valid for the week and time informed! (each class takes 1 hour)");
+            }
         }
+    }
+
+    private static boolean isHourRangeInClassroomList(String newHour, List<ClassroomEntity> classroomEntityList) {
+        LocalDateTime dateToValidate = LocalDateTime.parse("2000-01-01T"+newHour+":00");
+        LocalDateTime dateRegisterStart;
+        LocalDateTime dateRegisterEnd;
+        for (ClassroomEntity classroomEntity: classroomEntityList) {
+            dateRegisterStart  = LocalDateTime.parse("2000-01-01T"+classroomEntity.getClassroomTime()+":00");
+            dateRegisterEnd = LocalDateTime.parse("2000-01-01T"+classroomEntity.getClassroomTime()+":00").plusHours(1);
+            if(isDateToValidateBetweenTwoOtherDates(dateToValidate, dateRegisterStart, dateRegisterEnd)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isDateToValidateBetweenTwoOtherDates(LocalDateTime dateToValidate, LocalDateTime dateRegisterStart, LocalDateTime dateRegisterEnd) {
+        return (dateToValidate.isAfter(dateRegisterStart) && dateToValidate.isBefore(dateRegisterEnd)) || (dateToValidate.isEqual(dateRegisterStart));
     }
 
     @Override

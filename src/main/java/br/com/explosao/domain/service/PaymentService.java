@@ -10,5 +10,6 @@ public interface PaymentService {
 
     PaymentDTO getPaymentById(Long paymentId) throws ResourceNotFoundException, RFC3339DateFormatConverterException;
 
+    Long getLastPaymentFromStudentId(Long studentId) throws ResourceNotFoundException;
 
 }

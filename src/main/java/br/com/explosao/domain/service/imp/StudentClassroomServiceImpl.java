@@ -4,6 +4,7 @@ import br.com.explosao.domain.dto.StudentClassroomDTO;
 import br.com.explosao.domain.entity.StudentClassroomEntity;
 import br.com.explosao.domain.repository.StudentClassroomRepository;
 import br.com.explosao.domain.service.ClassroomService;
+import br.com.explosao.domain.service.PaymentService;
 import br.com.explosao.domain.service.StudentClassroomService;
 import br.com.explosao.domain.service.StudentService;
 import br.com.explosao.infrasctructure.exception.ResourceNotFoundException;
@@ -26,13 +27,27 @@ public class StudentClassroomServiceImpl implements StudentClassroomService {
     @Autowired
     ClassroomService classroomService;
 
+    @Autowired
+    PaymentService paymentService;
+
     @Override
     public StudentClassroomDTO postStudentClassroom(StudentClassroomDTO studentClassroom) throws ResourceNotFoundException {
         validateIfExistsStudentIdClassroomId(studentClassroom.getClassroomId(), studentClassroom.getStudentId());
+        getLastPaymentId(studentClassroom);
         StudentClassroomEntity studentClassroomEntity = getStudentClassroomEntityOrCreateNew(studentClassroom);
         populateStudentClassroomEntity(studentClassroomEntity, studentClassroom);
         return makeStudentClassroomDTO(studentClassroomRepository.save(studentClassroomEntity));
 
+    }
+
+    private void getLastPaymentId(StudentClassroomDTO studentClassroom) {
+        if(studentClassroom.getLastPaymentId() == null){
+            try{
+                studentClassroom.setLastPaymentId(paymentService.getLastPaymentFromStudentId(studentClassroom.getStudentId()));
+            }catch (ResourceNotFoundException ex){
+                System.out.println(ex.getMessage());
+            }
+        }
     }
 
     private void validateIfExistsStudentIdClassroomId(Long classroomId, Long studentId) throws ResourceNotFoundException {

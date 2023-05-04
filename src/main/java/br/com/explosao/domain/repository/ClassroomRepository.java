@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ClassroomRepository extends JpaRepository<ClassroomEntity, Long> {
 
-    Optional<ClassroomEntity> findOneByWeekDayAndClassroomTimeAndStatus(Integer weekDay, String classroomTime, Boolean status);
+    Optional<List<ClassroomEntity>> findAllByWeekDayAndStatus(Integer weekDay, Boolean status);
 
     List<ClassroomEntity> findAllByStatus(Boolean status);
 }
