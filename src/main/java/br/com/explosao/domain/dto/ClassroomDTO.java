@@ -24,10 +24,14 @@ public class ClassroomDTO implements Serializable {
     @Max(value = 7, message = "Week days should be between 1 and 7")
     @NotNull
     Integer weekDay;
-    @Size(max = 32, message = "Classroom Time characters should not be bigger then 8 and should respect this pattern (^\\d{2}:\\d{2}$)")
+    @Size(max = 5, message = "Classroom Time characters should not be bigger then 8 and should respect this pattern (^\\d{2}:\\d{2}$)")
     @Pattern(regexp = "(^\\d{2}:\\d{2}$)", flags = Pattern.Flag.UNICODE_CASE)
     @NotBlank
     String classroomTime;
+    @Size(max = 5, message = "Classroom Time characters should not be bigger then 8 and should respect this pattern (^\\d{2}:\\d{2}$)")
+    @Pattern(regexp = "(^\\d{2}:\\d{2}$)", flags = Pattern.Flag.UNICODE_CASE)
+    @NotBlank
+    String classroomEndTime;
     @Size(max = 128, message = "Professor Name characters should not be bigger then 128")
     String professorName;
     Boolean status;
@@ -98,6 +102,14 @@ public class ClassroomDTO implements Serializable {
         this.status = status;
     }
 
+    public String getClassroomEndTime() {
+        return classroomEndTime;
+    }
+
+    public void setClassroomEndTime(String classroomEndTime) {
+        this.classroomEndTime = classroomEndTime;
+    }
+
     @Override
     public String toString() {
         return "ClassroomDTO{" +
@@ -105,6 +117,7 @@ public class ClassroomDTO implements Serializable {
                 ", classroomName='" + classroomName + '\'' +
                 ", weekDay=" + weekDay +
                 ", classroomTime='" + classroomTime + '\'' +
+                ", classroomEndTime='" + classroomEndTime + '\'' +
                 ", professorName='" + professorName + '\'' +
                 ", status=" + status +
                 ", updatedAt=" + updatedAt +

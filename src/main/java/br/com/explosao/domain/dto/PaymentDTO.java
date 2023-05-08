@@ -1,6 +1,7 @@
 package br.com.explosao.domain.dto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class PaymentDTO {
@@ -9,7 +10,10 @@ public class PaymentDTO {
     @NotNull
     Long studentId;
     Double paymentValue;
-    @NotBlank
+    @Min(value = 1, message = "Month should be between 1 and 12")
+    @Max(value = 12, message = "Month should be between 1 and 7")
+    @NotNull
+    Integer monthId;
     String paymentAt;
 
     public Long getId() {
@@ -44,13 +48,11 @@ public class PaymentDTO {
         this.paymentAt = paymentAt;
     }
 
-    @Override
-    public String toString() {
-        return "PaymentDTO{" +
-                "id=" + id +
-                ", studentClassroomId=" + studentId +
-                ", paymentValue=" + paymentValue +
-                ", paymentAt='" + paymentAt + '\'' +
-                '}';
+    public Integer getMonthId() {
+        return monthId;
+    }
+
+    public void setMonthId(Integer monthId) {
+        this.monthId = monthId;
     }
 }

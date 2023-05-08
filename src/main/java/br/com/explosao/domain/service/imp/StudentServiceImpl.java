@@ -59,11 +59,16 @@ public class StudentServiceImpl implements StudentService {
         );
         studentEntity.setName(student.getName());
         studentEntity.setBirthday(studentBirthday);
-        studentEntity.setPhoneList(student.getPhoneList());
+        studentEntity.setPhoneNumber(student.getPhoneNumber());
+        studentEntity.setGuardianPhoneNumber(student.getGuardianPhoneNumber());
         studentEntity.setCpf(student.getCpf());
         studentEntity.setRegistration(student.getRegistration());
         studentEntity.setGuardianName(student.getGuardianName());
         studentEntity.setGuardianSignature(student.getGuardianSignature());
+        studentEntity.setCity(student.getCity());
+        studentEntity.setStudentNotes(student.getStudentNotes());
+        studentEntity.setAddress(student.getAddress());
+        studentEntity.setNeighborhood(student.getNeighborhood());
     }
 
     private void validateSignatureSize(String guardianSignature) throws ResourceSizeException {
@@ -81,11 +86,16 @@ public class StudentServiceImpl implements StudentService {
         student.setBirthday(studentEntity.getBirthday().toString());
         student.setCpf(studentEntity.getCpf());
         student.setRegistration(studentEntity.getRegistration());
-        student.setPhoneList(studentEntity.getPhoneList());
+        student.setPhoneNumber(studentEntity.getPhoneNumber());
         student.setGuardianName(studentEntity.getGuardianName());
         student.setGuardianSignature(studentEntity.getGuardianSignature());
         student.setInsertedAt(studentEntity.getInsertedAt());
         student.setUpdatedAt(studentEntity.getUpdatedAt());
+        student.setCity(studentEntity.getCity());
+        student.setStudentNotes(studentEntity.getStudentNotes());
+        student.setAddress(studentEntity.getAddress());
+        student.setNeighborhood(studentEntity.getNeighborhood());
+        student.setGuardianPhoneNumber(studentEntity.getGuardianPhoneNumber());
         return student;
     }
 

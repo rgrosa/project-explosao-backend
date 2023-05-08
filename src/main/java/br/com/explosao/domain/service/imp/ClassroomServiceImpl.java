@@ -36,6 +36,7 @@ public class ClassroomServiceImpl implements ClassroomService {
         classroomEntity.setProfessorName(classroom.getProfessorName());
         classroomEntity.setWeekDay(classroom.getWeekDay());
         classroomEntity.setStatus(classroom.getStatus());
+        classroomEntity.setClassroomEndTime(classroom.getClassroomEndTime());
     }
 
     private ClassroomEntity getClassroomEntityOrCreateNew(ClassroomDTO classroom) {
@@ -56,28 +57,33 @@ public class ClassroomServiceImpl implements ClassroomService {
                         true
                 );
         if(optionalClassroomEntity.isPresent()){
-            if(isHourRangeInClassroomList(classroom.getClassroomTime(), optionalClassroomEntity.get())){
-                throw new MultipleResourceException("A active classroom is already valid for the week and time informed! (each class takes 1 hour)");
+            //TODO: REFAZER OLHANDO O HORARIO DE INICIO E FIM
+            if(isHourRangeInClassroomList(classroom, optionalClassroomEntity.get())){
+                throw new MultipleResourceException("A active classroom is already valid for the week and time informed!");
             }
         }
     }
 
-    private static boolean isHourRangeInClassroomList(String newHour, List<ClassroomEntity> classroomEntityList) {
-        LocalDateTime dateToValidate = LocalDateTime.parse("2000-01-01T"+newHour+":00");
+    private static boolean isHourRangeInClassroomList(ClassroomDTO classroom, List<ClassroomEntity> classroomEntityList) {
+        LocalDateTime dateToValidateStart = LocalDateTime.parse("2000-01-01T"+classroom.getClassroomTime()+":00");
+        LocalDateTime dateToValidateEnd = LocalDateTime.parse("2000-01-01T"+classroom.getClassroomEndTime()+":00");
         LocalDateTime dateRegisterStart;
         LocalDateTime dateRegisterEnd;
         for (ClassroomEntity classroomEntity: classroomEntityList) {
             dateRegisterStart  = LocalDateTime.parse("2000-01-01T"+classroomEntity.getClassroomTime()+":00");
-            dateRegisterEnd = LocalDateTime.parse("2000-01-01T"+classroomEntity.getClassroomTime()+":00").plusHours(1);
-            if(isDateToValidateBetweenTwoOtherDates(dateToValidate, dateRegisterStart, dateRegisterEnd)){
+            dateRegisterEnd = LocalDateTime.parse("2000-01-01T"+classroomEntity.getClassroomEndTime()+":00");
+            if(isDateToValidateBetweenTwoOtherDates(dateToValidateStart, dateToValidateEnd, dateRegisterStart, dateRegisterEnd)){
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean isDateToValidateBetweenTwoOtherDates(LocalDateTime dateToValidate, LocalDateTime dateRegisterStart, LocalDateTime dateRegisterEnd) {
-        return (dateToValidate.isAfter(dateRegisterStart) && dateToValidate.isBefore(dateRegisterEnd)) || (dateToValidate.isEqual(dateRegisterStart));
+    private static boolean isDateToValidateBetweenTwoOtherDates(LocalDateTime dateToValidateStart, LocalDateTime dateToValidateEnd, LocalDateTime dateRegisterStart, LocalDateTime dateRegisterEnd) {
+        return (dateToValidateStart.isAfter(dateRegisterStart) && dateToValidateStart.isBefore(dateRegisterEnd)) ||
+                (dateToValidateStart.isEqual(dateRegisterStart)) ||
+                (dateToValidateEnd.isAfter(dateRegisterStart) && dateToValidateEnd.isBefore(dateRegisterEnd)) ||
+                (dateToValidateEnd.isEqual(dateRegisterEnd));
     }
 
     @Override
@@ -113,6 +119,7 @@ public class ClassroomServiceImpl implements ClassroomService {
         classroom.setInsertedAt(classroomEntity.getInsertedAt());
         classroom.setUpdatedAt(classroomEntity.getUpdatedAt());
         classroom.setStatus(classroomEntity.getStatus());
+        classroom.setClassroomEndTime(classroomEntity.getClassroomEndTime());
         return classroom;
     }
 

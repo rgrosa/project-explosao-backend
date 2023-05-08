@@ -19,8 +19,10 @@ public class StudentEntity {
     Long id;
     @Column(name = "NAME")
     String name;
-    @Column(name = "PHONE_LIST")
-    String phoneList;
+    @Column(name = "PHONE_NUMBER")
+    String phoneNumber;
+    @Column(name = "GUARDIAN_PHONE_NUMBER")
+    String guardianPhoneNumber;
     @Column(name = "GUARDIAN_NAME")
     String guardianName;
     @Column(name = "GUARDIAN_SIGNATURE")
@@ -35,6 +37,14 @@ public class StudentEntity {
     LocalDateTime updatedAt;
     @Column(name = "INSERTED_AT")
     LocalDateTime insertedAt;
+    @Column(name = "ADDRESS")
+    String address;
+    @Column(name = "CITY")
+    String city;
+    @Column(name = "NEIGHBORHOOD")
+    String neighborhood;
+    @Column(name = "STUDENT_NOTES")
+    String studentNotes;
 
     public Long getId() {
         return id;
@@ -52,12 +62,12 @@ public class StudentEntity {
         this.name = name;
     }
 
-    public String getPhoneList() {
-        return phoneList;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneList(String phoneList) {
-        this.phoneList = phoneList;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getGuardianName() {
@@ -116,6 +126,46 @@ public class StudentEntity {
         this.insertedAt = insertedAt;
     }
 
+    public String getGuardianPhoneNumber() {
+        return guardianPhoneNumber;
+    }
+
+    public void setGuardianPhoneNumber(String guardianPhoneNumber) {
+        this.guardianPhoneNumber = guardianPhoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getStudentNotes() {
+        return studentNotes;
+    }
+
+    public void setStudentNotes(String studentNotes) {
+        this.studentNotes = studentNotes;
+    }
+
     @PrePersist
     private void prePersistFunction(){
         this.updatedAt = LocalDateTime.now();
@@ -132,7 +182,8 @@ public class StudentEntity {
         return "StudentEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", phoneList='" + phoneList + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", guardianPhoneNumber='" + guardianPhoneNumber + '\'' +
                 ", guardianName='" + guardianName + '\'' +
                 ", guardianSignature='" + guardianSignature + '\'' +
                 ", cpf='" + cpf + '\'' +
@@ -140,6 +191,10 @@ public class StudentEntity {
                 ", birthday=" + birthday +
                 ", updatedAt=" + updatedAt +
                 ", insertedAt=" + insertedAt +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", neighborhood='" + neighborhood + '\'' +
+                ", studentNotes='" + studentNotes + '\'' +
                 '}';
     }
 }

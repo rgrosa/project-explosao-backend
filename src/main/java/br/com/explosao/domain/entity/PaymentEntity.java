@@ -23,6 +23,9 @@ public class PaymentEntity {
     @Column(name = "PAYMENT_VALUE")
     Double paymentValue;
 
+    @Column(name = "MONTH_ID")
+    Integer monthId;
+
     @Column(name = "PAYMENT_AT")
     LocalDateTime paymentAt;
 
@@ -58,6 +61,13 @@ public class PaymentEntity {
         this.paymentAt = paymentAt;
     }
 
+    public Integer getMonthId() {
+        return monthId;
+    }
+
+    public void setMonthId(Integer monthId) {
+        this.monthId = monthId;
+    }
 
     @PrePersist
     private void prePersistFunction(){
@@ -68,9 +78,10 @@ public class PaymentEntity {
     public String toString() {
         return "PaymentEntity{" +
                 "id=" + id +
-                ", studentClassroomId=" + studentId +
+                ", studentId=" + studentId +
                 ", paymentValue=" + paymentValue +
-                ", paymentAt=" + paymentAt +
+                ", monthId=" + monthId +
+                ", createdAt=" + paymentAt +
                 '}';
     }
 }

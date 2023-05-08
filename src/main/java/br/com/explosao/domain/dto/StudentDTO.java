@@ -16,15 +16,21 @@ public class StudentDTO implements Serializable {
     @Size(max = 128,  message = "Student Name characters should not be bigger then 128 ")
     @NotBlank
     String name;
-    @Size(max = 128,  message = "Student Phone List characters should not be bigger then 128 ")
-    String phoneList;
+    @Size(max = 32,  message = "Student Phone characters should not be bigger then 128 ")
+    String phoneNumber;
     @Size(max = 128,  message = "Student Guardian Name characters should not be bigger then 128 ")
     String guardianName;
     String guardianSignature;
-    @Size(max = 32,  message = "Classroom Name characters should not be bigger then 128 ")
+    @Size(max = 32,  message = "Guardian phone number characters should not be bigger then 128 ")
+    String guardianPhoneNumber;
+    @Size(max = 32,  message = "Student Name characters should not be bigger then 32 ")
     String cpf;
-    @Size(max = 32,  message = "Classroom Registration characters should not be bigger then 128 ")
+    @Size(max = 32,  message = "Student Registration characters should not be bigger then 32 ")
     String registration;
+    String address;
+    String city;
+    String neighborhood;
+    String studentNotes;
     String birthday;
     LocalDateTime updatedAt;
     LocalDateTime insertedAt;
@@ -45,12 +51,12 @@ public class StudentDTO implements Serializable {
         this.name = name;
     }
 
-    public String getPhoneList() {
-        return phoneList;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneList(String phoneList) {
-        this.phoneList = phoneList;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getGuardianName() {
@@ -109,17 +115,62 @@ public class StudentDTO implements Serializable {
         this.insertedAt = insertedAt;
     }
 
+    public String getGuardianPhoneNumber() {
+        return guardianPhoneNumber;
+    }
+
+    public void setGuardianPhoneNumber(String guardianPhoneNumber) {
+        this.guardianPhoneNumber = guardianPhoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getStudentNotes() {
+        return studentNotes;
+    }
+
+    public void setStudentNotes(String studentNotes) {
+        this.studentNotes = studentNotes;
+    }
+
     @Override
     public String toString() {
         return "StudentDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", phoneList='" + phoneList + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", guardianName='" + guardianName + '\'' +
                 ", guardianSignature='" + guardianSignature + '\'' +
+                ", guardianPhoneNumber='" + guardianPhoneNumber + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", registration='" + registration + '\'' +
-                ", birthday=" + birthday +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", neighborhood='" + neighborhood + '\'' +
+                ", studentNotes='" + studentNotes + '\'' +
+                ", birthday='" + birthday + '\'' +
                 ", updatedAt=" + updatedAt +
                 ", insertedAt=" + insertedAt +
                 '}';

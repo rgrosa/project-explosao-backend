@@ -16,6 +16,8 @@ public class ClassroomEntity {
     Integer weekDay;
     @Column(name = "CLASSROOM_TIME")
     String classroomTime;
+    @Column(name = "CLASSROOM_END_TIME")
+    String classroomEndTime;
     @Column(name = "PROFESSOR_NAME")
     String professorName;
     @Column(name = "UPDATED_AT")
@@ -89,6 +91,8 @@ public class ClassroomEntity {
         this.status = status;
     }
 
+
+
     @PrePersist
     private void prePersistFunction(){
         this.updatedAt = LocalDateTime.now();
@@ -100,6 +104,14 @@ public class ClassroomEntity {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public String getClassroomEndTime() {
+        return classroomEndTime;
+    }
+
+    public void setClassroomEndTime(String classroomEndTime) {
+        this.classroomEndTime = classroomEndTime;
+    }
+
     @Override
     public String toString() {
         return "ClassroomEntity{" +
@@ -107,6 +119,7 @@ public class ClassroomEntity {
                 ", classroomName='" + classroomName + '\'' +
                 ", weekDay=" + weekDay +
                 ", classroomTime='" + classroomTime + '\'' +
+                ", classroomEndTime='" + classroomEndTime + '\'' +
                 ", professorName='" + professorName + '\'' +
                 ", updatedAt=" + updatedAt +
                 ", status=" + status +

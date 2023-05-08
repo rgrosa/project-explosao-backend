@@ -16,6 +16,7 @@ public class StudentClassroomDTO implements Serializable {
     @NotNull
     Long studentId;
     Boolean status;
+    Boolean isPaymentDue;
     Long lastPaymentId;
     LocalDateTime updatedAt;
     LocalDateTime insertedAt;
@@ -74,5 +75,13 @@ public class StudentClassroomDTO implements Serializable {
 
     public void setInsertedAt(LocalDateTime insertedAt) {
         this.insertedAt = insertedAt;
+    }
+
+    public Boolean getPaymentDue() {
+        return isPaymentDue;
+    }
+
+    public void setPaymentDue(Boolean paymentDue) {
+        isPaymentDue = paymentDue;
     }
 }

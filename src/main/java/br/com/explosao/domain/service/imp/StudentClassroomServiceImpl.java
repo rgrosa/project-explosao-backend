@@ -90,6 +90,7 @@ public class StudentClassroomServiceImpl implements StudentClassroomService {
         studentClassroom.setLastPaymentId(studentClassroomEntity.getLastPaymentId());
         studentClassroom.setInsertedAt(studentClassroomEntity.getInsertedAt());
         studentClassroom.setUpdatedAt(studentClassroomEntity.getUpdatedAt());
+        studentClassroom.setPaymentDue(studentClassroomEntity.getPaymentDue());
         return studentClassroom;
     }
 
@@ -98,6 +99,7 @@ public class StudentClassroomServiceImpl implements StudentClassroomService {
         studentClassroomEntity.setStudentId(studentClassroom.getStudentId());
         studentClassroomEntity.setStatus(studentClassroom.getStatus());
         studentClassroomEntity.setLastPaymentId(studentClassroom.getLastPaymentId());
+        studentClassroomEntity.setPaymentDue(studentClassroom.getPaymentDue());
     }
 
     private StudentClassroomEntity getStudentClassroomEntityOrCreateNew(StudentClassroomDTO studentClassroom) {

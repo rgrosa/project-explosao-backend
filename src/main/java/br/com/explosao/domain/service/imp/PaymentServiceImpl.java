@@ -12,7 +12,6 @@ import br.com.explosao.infrasctructure.util.date.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,9 +27,17 @@ public class PaymentServiceImpl implements PaymentService {
     
     @Override
     public PaymentDTO postPayment(PaymentDTO paymentDTO) throws Exception {
-        LocalDateTime paymentAt = DateFormatter.string2LocalDateTime(
-                paymentDTO.getPaymentAt(),
-                "yyyy-MM-dd'T'HH:mm:ss");
+        List<StudentClassroomDTO> studentClassroomList = validatePaymentAndGetStudentClassroomList(paymentDTO);
+        PaymentEntity paymentEntity = paymentRepository.save(makePaymentEntity(paymentDTO));
+        mergeStudentClassroomListWithPayment(studentClassroomList, paymentEntity.getId());
+        return makePaymentDTO(paymentEntity);
+    }
+
+    private List<StudentClassroomDTO> validatePaymentAndGetStudentClassroomList(PaymentDTO paymentDTO) throws Exception {
+        if(paymentRepository.findOneByStudentIdAndMonthId(paymentDTO.getStudentId(), paymentDTO.getMonthId()).isPresent()){
+            throw new ResourceNotFoundException("Payment for this student and month already realized");
+        }
+
         List<StudentClassroomDTO> studentClassroomList = studentClassroomService.
                 getStudentClassroomListByStudentIdAndStatus(
                         paymentDTO.getStudentId(),
@@ -38,9 +45,7 @@ public class PaymentServiceImpl implements PaymentService {
         if(studentClassroomList.isEmpty()){
             throw new ResourceNotFoundException("Student not found, possible he is not in any class");
         }
-        PaymentEntity paymentEntity = paymentRepository.save(makePaymentEntity(paymentDTO, paymentAt));
-        mergeStudentClassroomListWithPayment(studentClassroomList, paymentEntity.getId());
-        return makePaymentDTO(paymentEntity);
+        return studentClassroomList;
     }
 
     @Override
@@ -55,10 +60,10 @@ public class PaymentServiceImpl implements PaymentService {
         return optionalPaymentEntity.orElseThrow(() -> new ResourceNotFoundException("Resource not found")).getId();
     }
 
-    private PaymentEntity makePaymentEntity(PaymentDTO paymentDTO, LocalDateTime paymentAt) {
+    private PaymentEntity makePaymentEntity(PaymentDTO paymentDTO) {
         PaymentEntity paymentEntity = new PaymentEntity();
         paymentEntity.setStudentId(paymentDTO.getStudentId());
-        paymentEntity.setPaymentAt(paymentAt);
+        paymentEntity.setMonthId(paymentDTO.getMonthId());
         paymentEntity.setPaymentValue(paymentDTO.getPaymentValue());
         return paymentEntity;
     }
@@ -68,12 +73,14 @@ public class PaymentServiceImpl implements PaymentService {
         paymentDTO.setPaymentAt(DateFormatter.localDateTime2string(paymentEntity.getPaymentAt()));
         paymentDTO.setPaymentValue(paymentEntity.getPaymentValue());
         paymentDTO.setStudentId(paymentEntity.getStudentId());
+        paymentDTO.setMonthId(paymentEntity.getMonthId());
         return paymentDTO;
     }
 
     private void mergeStudentClassroomListWithPayment(List<StudentClassroomDTO> studentClassroomList, Long lastPaymentId) throws ResourceNotFoundException {
         for (StudentClassroomDTO studentClassroom: studentClassroomList) {
             studentClassroom.setLastPaymentId(lastPaymentId);
+            studentClassroom.setPaymentDue(false);
             studentClassroomService.postStudentClassroom(studentClassroom);
         }
     }

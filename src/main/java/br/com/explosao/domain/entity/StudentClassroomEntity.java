@@ -25,6 +25,8 @@ public class StudentClassroomEntity {
     Boolean status;
     @Column(name = "LAST_PAYMENT_ID")
     Long lastPaymentId;
+    @Column(name = "IS_PAYMENT_DUE")
+    Boolean isPaymentDue;
     @Column(name = "UPDATED_AT")
     LocalDateTime updatedAt;
     @Column(name = "INSERTED_AT")
@@ -86,6 +88,14 @@ public class StudentClassroomEntity {
         this.insertedAt = insertedAt;
     }
 
+    public Boolean getPaymentDue() {
+        return isPaymentDue;
+    }
+
+    public void setPaymentDue(Boolean paymentDue) {
+        isPaymentDue = paymentDue;
+    }
+
     @PrePersist
     private void prePersistFunction(){
         this.updatedAt = LocalDateTime.now();
@@ -97,7 +107,6 @@ public class StudentClassroomEntity {
         this.updatedAt = LocalDateTime.now();
     }
 
-
     @Override
     public String toString() {
         return "StudentClassroomEntity{" +
@@ -106,6 +115,7 @@ public class StudentClassroomEntity {
                 ", studentId=" + studentId +
                 ", status=" + status +
                 ", lastPaymentId=" + lastPaymentId +
+                ", isPaymentDue=" + isPaymentDue +
                 ", updatedAt=" + updatedAt +
                 ", insertedAt=" + insertedAt +
                 '}';
