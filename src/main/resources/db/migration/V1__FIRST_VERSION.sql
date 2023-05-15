@@ -57,3 +57,15 @@ create table IF NOT EXISTS PAYMENT (
     MONTH_ID                bigint,
     PAYMENT_AT              date
 );
+
+create view if not exists DASHBOARD_STUDENT_DUE as
+    select distinct
+     s.id as id,
+     s.name as student_name,
+     s.birthday as student_birthday,
+     p.payment_at as last_payment,
+     (select count(id) from student_Classroom sc2 where sc2.student_id = sc.student_id) as total_classroom_enlisted
+     from STUDENT_CLASSROOM sc
+     join student s on sc.student_id = s.id
+     left join payment p on sc.last_payment_id = p.id
+      where sc.status is true and (sc.is_payment_due is true or sc.is_payment_due is null);

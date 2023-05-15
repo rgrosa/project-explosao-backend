@@ -13,4 +13,7 @@ public interface StudentClassroomService {
 
     List<StudentClassroomDTO> getStudentClassroomListByStudentIdAndStatus(Long studentId, Boolean showOnlyActive) throws Exception;
 
+    List<StudentClassroomDTO> getStudentClassroomListWithNoPaymentIdOrMonthNotEquals(Integer currentMonth) throws ResourceNotFoundException;
+
+    List<StudentClassroomDTO> getStudentClassroomListByStatus(Boolean status) throws ResourceNotFoundException;
 }

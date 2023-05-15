@@ -12,6 +12,8 @@ import br.com.explosao.infrasctructure.util.date.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +34,6 @@ public class PaymentServiceImpl implements PaymentService {
         mergeStudentClassroomListWithPayment(studentClassroomList, paymentEntity.getId());
         return makePaymentDTO(paymentEntity);
     }
-
     private List<StudentClassroomDTO> validatePaymentAndGetStudentClassroomList(PaymentDTO paymentDTO) throws Exception {
         if(paymentRepository.findOneByStudentIdAndMonthId(paymentDTO.getStudentId(), paymentDTO.getMonthId()).isPresent()){
             throw new ResourceNotFoundException("Payment for this student and month already realized");
@@ -58,6 +59,20 @@ public class PaymentServiceImpl implements PaymentService {
     public Long getLastPaymentFromStudentId(Long studentId) throws ResourceNotFoundException {
         Optional<PaymentEntity> optionalPaymentEntity = paymentRepository.findLastIdByStudentId(studentId);
         return optionalPaymentEntity.orElseThrow(() -> new ResourceNotFoundException("Resource not found")).getId();
+    }
+
+    @Override
+    public List<PaymentDTO> getPaymentListFromDate(LocalDateTime fromDate, LocalDateTime toDate) throws ResourceNotFoundException, RFC3339DateFormatConverterException {
+        Optional<List<PaymentEntity>> optionalPaymentEntity = paymentRepository.findAllByPaymentAtBetween(fromDate, toDate);
+        return makePaymentDTOList(optionalPaymentEntity.orElseThrow(() -> new ResourceNotFoundException("Resource not found")));
+    }
+
+    private List<PaymentDTO> makePaymentDTOList(List<PaymentEntity> paymentEntityList) throws RFC3339DateFormatConverterException {
+        List<PaymentDTO> paymentDTOList = new ArrayList<>();
+        for (PaymentEntity paymentEntity :paymentEntityList) {
+            paymentDTOList.add(makePaymentDTO(paymentEntity));
+        }
+        return paymentDTOList;
     }
 
     private PaymentEntity makePaymentEntity(PaymentDTO paymentDTO) {

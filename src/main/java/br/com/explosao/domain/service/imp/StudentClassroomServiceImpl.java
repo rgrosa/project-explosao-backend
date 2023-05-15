@@ -44,10 +44,17 @@ public class StudentClassroomServiceImpl implements StudentClassroomService {
         if(studentClassroom.getLastPaymentId() == null){
             try{
                 studentClassroom.setLastPaymentId(paymentService.getLastPaymentFromStudentId(studentClassroom.getStudentId()));
+                studentClassroom.setPaymentDue(verifyIfPaymentIdIsDue(studentClassroom.getLastPaymentId()));
             }catch (ResourceNotFoundException ex){
                 System.out.println(ex.getMessage());
             }
         }
+    }
+
+    private Boolean verifyIfPaymentIdIsDue(Long lastPaymentId) {
+        List<StudentClassroomEntity> studentClassroomEntityList =
+                studentClassroomRepository.findAllByIsPaymentDueAndLastPaymentId(true, lastPaymentId);
+        return studentClassroomEntityList.size() > 0;
     }
 
     private void validateIfExistsStudentIdClassroomId(Long classroomId, Long studentId) throws ResourceNotFoundException {
@@ -68,6 +75,24 @@ public class StudentClassroomServiceImpl implements StudentClassroomService {
     public List<StudentClassroomDTO> getStudentClassroomListByStudentIdAndStatus(Long studentId, Boolean showOnlyActive) throws Exception {
         Optional<List<StudentClassroomEntity>> optionalStudentClassroomEntityList =
                 studentClassroomRepository.findAllByStudentIdAndStatus(studentId, showOnlyActive);
+        return makeStudentClassroomDTOList(
+                optionalStudentClassroomEntityList.orElseThrow(() -> new ResourceNotFoundException("Student Classroom relation not found"))
+        );
+    }
+
+    @Override
+    public List<StudentClassroomDTO> getStudentClassroomListWithNoPaymentIdOrMonthNotEquals(Integer currentMonth) throws ResourceNotFoundException {
+        Optional<List<StudentClassroomEntity>> optionalStudentClassroomEntityList =
+                studentClassroomRepository.findAllNoPaymentIdOrMonthNotEquals(currentMonth);
+        return makeStudentClassroomDTOList(
+                optionalStudentClassroomEntityList.orElseThrow(() -> new ResourceNotFoundException("Student Classroom relation not found"))
+        );
+    }
+
+    @Override
+    public List<StudentClassroomDTO> getStudentClassroomListByStatus(Boolean status) throws ResourceNotFoundException {
+        Optional<List<StudentClassroomEntity>> optionalStudentClassroomEntityList =
+                studentClassroomRepository.findAllByStatus(status);
         return makeStudentClassroomDTOList(
                 optionalStudentClassroomEntityList.orElseThrow(() -> new ResourceNotFoundException("Student Classroom relation not found"))
         );

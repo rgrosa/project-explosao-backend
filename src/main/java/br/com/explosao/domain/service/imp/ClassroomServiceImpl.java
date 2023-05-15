@@ -57,7 +57,6 @@ public class ClassroomServiceImpl implements ClassroomService {
                         true
                 );
         if(optionalClassroomEntity.isPresent()){
-            //TODO: REFAZER OLHANDO O HORARIO DE INICIO E FIM
             if(isHourRangeInClassroomList(classroom, optionalClassroomEntity.get())){
                 throw new MultipleResourceException("A active classroom is already valid for the week and time informed!");
             }
@@ -122,6 +121,4 @@ public class ClassroomServiceImpl implements ClassroomService {
         classroom.setClassroomEndTime(classroomEntity.getClassroomEndTime());
         return classroom;
     }
-
-
 }
